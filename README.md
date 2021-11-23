@@ -1,29 +1,4 @@
-public class MainActivity extends AppCompatActivity {
-
-    CardForm cardForm;
-    Button buy;
-    AlertDialog.Builder alertBuilder;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        cardForm = findViewById(R.id.card_form);
-        buy = findViewById(R.id.btnBuy);
-        cardForm.cardRequired(true)
-                .expirationRequired(true)
-                .cvvRequired(true)
-                .postalCodeRequired(true)
-                .mobileNumberRequired(true)
-                .mobileNumberExplanation("SMS is required on this number")
-                .setup(MainActivity.this);
-        cardForm.getCvvEditText().setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        buy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (cardForm.isValid()) {
-                    alertBuilder = new AlertDialog.Builder(MainActivity.this);
+AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
                     alertBuilder.setTitle("Confirm before purchase");
                     alertBuilder.setMessage("Card number: " + cardForm.getCardNumber() + "\n" +
                             "Card expiry date: " + cardForm.getExpirationDateEditText().getText().toString() + "\n" +
@@ -45,11 +20,3 @@ public class MainActivity extends AppCompatActivity {
                     });
                     AlertDialog alertDialog = alertBuilder.create();
                     alertDialog.show();
-
-                } else {
-                    Toast.makeText(MainActivity.this, "Please complete the form", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-}
